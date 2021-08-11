@@ -1,16 +1,17 @@
 package com.example.notemaker
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
-interface WordDao {
+interface NotesDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(notes: Notes)
+    suspend fun insert(notes: Notes)
 
     @Delete
-    fun delete(notes: Notes)
+    suspend fun delete(notes: Notes)
 
     @Query("Select * from notes_table order by id ASC")
-    fun getAllNotes(notes: Notes)
+    fun getAllNotes() : LiveData<List<Notes>>
 }
